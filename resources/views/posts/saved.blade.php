@@ -2,7 +2,7 @@
 <div class="max-w-2xl mx-auto py-6 px-4">
 
     <div class="flex items-center gap-3 mb-6">
-        <x-back-link href="/profile" label="Profile" />
+        <x-back-link href="/users/{{ auth()->id() }}" label="Profile" />
         <h1 class="text-[15px] font-semibold text-slate-100">Saved posts</h1>
     </div>
 
