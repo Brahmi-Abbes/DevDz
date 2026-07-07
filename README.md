@@ -151,77 +151,6 @@ After running `--seed`, the following accounts are available:
 
 ---
 
-## Project Structure
-
-```
-app/
-├── Http/
-│   ├── Controllers/
-│   │   ├── Auth/
-│   │   │   ├── RegisterController.php
-│   │   │   ├── LoginController.php (SessionController)
-│   │   │   └── LogoutController.php
-│   │   ├── HomeController.php
-│   │   ├── PostController.php
-│   │   ├── UserController.php
-│   │   ├── VoteController.php
-│   │   ├── CommentController.php
-│   │   ├── CommentReactionController.php
-│   │   └── SavedPostController.php
-│   └── Middleware/
-├── Models/
-│   ├── User.php
-│   ├── Post.php
-│   ├── Tag.php
-│   ├── Comment.php
-│   ├── Vote.php
-│   ├── CommentReaction.php
-│   └── SavedPost.php (pivot)
-
-resources/views/
-├── components/
-│   ├── layout.blade.php
-│   ├── post-card.blade.php
-│   ├── post-meta.blade.php
-│   ├── tag-list.blade.php
-│   ├── user-avatar.blade.php
-│   ├── vote-buttons.blade.php
-│   ├── save-button.blade.php
-│   ├── back-link.blade.php
-│   ├── comment-card.blade.php
-│   ├── comment-form.blade.php
-│   └── forms/
-│       ├── composer.blade.php
-│       ├── auth-card.blade.php
-│       └── auth-field.blade.php
-├── auth/
-│   ├── login.blade.php
-│   └── register.blade.php
-├── posts/
-│   ├── index.blade.php
-│   ├── create.blade.php
-│   ├── edit.blade.php
-│   └── saved.blade.php
-└── users/
-    ├── profile.blade.php
-    └── edit.blade.php
-
-database/
-├── migrations/
-│   ├── create_users_table.php
-│   ├── create_posts_table.php
-│   ├── create_tags_table.php
-│   ├── create_post_tag_table.php
-│   ├── create_comments_table.php
-│   ├── create_votes_table.php
-│   ├── create_comment_reactions_table.php
-│   └── create_saved_posts_table.php
-└── seeders/
-    └── DatabaseSeeder.php
-```
-
----
-
 ## Database Schema
 
 ```
@@ -260,16 +189,10 @@ Built authentication from scratch to demonstrate understanding of Laravel's sess
 ### Component Architecture
 The UI is built with a strict componentization philosophy:
 - Components are only created when used in **multiple places**
-- Single-use complex markup is kept inline
-- No over-engineering: `x-post-meta`, `x-vote-buttons`, `x-user-avatar` are used across 3+ views each
 
 ### Vote System Design
 Votes use a dedicated `votes` table with a `unique(user_id, post_id)` constraint (requires an `id` primary key for Eloquent `save()` to work correctly). Toggle logic: same vote = undo, opposite vote = switch.
 
-### No Right Sidebar
-The right sidebar was removed in favor of a wider, cleaner feed. Hardcoded city activity and tag data provides no real value — removed rather than faking it.
-
----
 
 ## Roadmap
 
@@ -286,9 +209,9 @@ The right sidebar was removed in favor of a wider, cleaner feed. Hardcoded city 
 
 ## Deployment
 
-The app is deployed on [Railway](https://railway.app) / [Render](https://render.com).
+The app is deployed on [Railway](https://railway.app)
 
-**Live demo:** [devdz.up.railway.app](https://devdz.up.railway.app) *(coming soon)*
+**Live demo:** [https://devdz-production.up.railway.app/](https://devdz-production.up.railway.app/)
 
 To deploy yourself:
 
@@ -334,5 +257,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 **Brahmi Abbes**
 - GitHub: [@abbes](https://github.com/abbes)
-- DevDZ: [devdz.dz](https://devdz.dz)
-- Built at ENSTA Algiers, 2026
+- DevDZ: [devdz.dz](https://devdz-production.up.railway.app/)
