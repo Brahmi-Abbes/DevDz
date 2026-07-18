@@ -237,7 +237,7 @@ php artisan view:cache
 
 ## Contributing
 
-This is a portfolio project but contributions and feedback are welcome.
+contributions and feedback are welcome.
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/your-feature`)
