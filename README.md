@@ -1,4 +1,4 @@
-# DevDZ 🇩🇿
+# DevDZ 
 
 > A community platform built by and for Algerian developers — share projects, find jobs, ask questions, and connect with the local dev community.
 
