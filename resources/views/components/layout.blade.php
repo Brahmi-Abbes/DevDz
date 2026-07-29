@@ -6,18 +6,28 @@
     <title>DevDZ</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#08090e] text-slate-200 overflow-hidden h-screen">
+<body class="bg-[#08090e] text-slate-200 md:overflow-hidden md:h-screen">
 
     {{-- NAV --}}
-    <nav class="bg-[#0d0f17] border-b border-white/[0.07] h-12 flex items-center px-6 sticky top-0 z-50">
-        <div class="flex items-center justify-between w-full max-w-275 mx-auto">
+    <nav class="bg-[#0d0f17] border-b border-white/[0.07] flex items-center px-3 md:px-6 sticky top-0 z-50">
+        <div class="flex items-center justify-between w-full max-w-275 mx-auto h-12">
 
-            <a href="/" class="text-[15px] font-semibold tracking-tight text-slate-100 shrink-0">
-                Dev<span class="text-blue-400">DZ</span>
-            </a>
+            <div class="flex items-center gap-2">
+                <button type="button" id="mobile-menu-btn" class="md:hidden -ml-1 p-2 text-slate-400 hover:text-slate-200 cursor-pointer">
+                    <svg id="mobile-menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="mobile-menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                <a href="/" class="text-[15px] font-semibold tracking-tight text-slate-100 shrink-0">
+                    Dev<span class="text-blue-400">DZ</span>
+                </a>
+            </div>
 
-            {{-- Sort + Filter tabs --}}
-            <div class="flex items-center gap-0.5">
+            {{-- Sort + Filter tabs (desktop) --}}
+            <div class="hidden md:flex items-center gap-0.5">
                 @foreach([
                     ['label' => 'Feed',      'href' => '/',                    'active' => request()->is('/') && !request()->has('type') && !request()->has('sort')],
                     ['label' => 'Projects',  'href' => '/?type=project',       'active' => request()->get('type') === 'project'],
@@ -41,42 +51,91 @@
                     @endforeach
                 @endunless
             </div>
-            <form action="/" method="GET" class="flex items-center">
+            <form action="/" method="GET" class="hidden sm:flex items-center">
                 <div class="relative">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="Search..."
-                        class="bg-slate-800/60 border border-slate-700 rounded-lg pl-8 pr-3 py-1.5 text-[12px] text-slate-300 placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors w-40 focus:w-56">
+                        class="bg-slate-800/60 border border-slate-700 rounded-lg pl-8 pr-3 py-1.5 text-[12px] text-slate-300 placeholder-slate-600 focus:outline-none focus:border-blue-500/60 transition-colors w-28 sm:w-40 focus:w-56">
                 </div>
             </form>
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 md:gap-2">
                 @auth
                     @unless(request()->is('posts/create'))
-                        <a href="/posts/create" class="text-[12px] font-medium px-3 py-1.5 rounded-md bg-blue-500 hover:bg-blue-400 text-white transition-colors">+ Post</a>
-                    @endunless                    <a href="/users/{{ auth()->id() }}" class="text-[12px] text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-md hover:bg-white/5 transition-colors">{{ auth()->user()->name }}</a>
-                    <form method="POST" action="/logout" class="inline">
+                        <a href="/posts/create" class="text-[12px] font-medium px-2.5 md:px-3 py-1.5 rounded-md bg-blue-500 hover:bg-blue-400 text-white transition-colors">+ Post</a>
+                    @endunless
+                    <a href="/users/{{ auth()->id() }}" class="hidden md:inline-block text-[12px] text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-md hover:bg-white/5 transition-colors">{{ auth()->user()->name }}</a>
+                    <form method="POST" action="/logout" class="hidden md:inline">
                         @csrf
                         <button class="text-[12px] text-slate-500 hover:text-slate-200 px-3 py-1.5 rounded-md border border-white/10 hover:bg-white/5 transition-colors cursor-pointer">Logout</button>
                     </form>
                 @endauth
                 @guest
-                    <a href="/login" class="text-[12px] text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-md border border-white/10 hover:bg-white/5 transition-colors">Login</a>
-                    <a href="/register" class="text-[12px] font-medium px-3 py-1.5 rounded-md bg-blue-500 hover:bg-blue-400 text-white transition-colors">Register</a>
+                    <a href="/login" class="text-[12px] text-slate-400 hover:text-slate-200 px-2.5 md:px-3 py-1.5 rounded-md border border-white/10 hover:bg-white/5 transition-colors">Login</a>
+                    <a href="/register" class="hidden sm:inline-block text-[12px] font-medium px-3 py-1.5 rounded-md bg-blue-500 hover:bg-blue-400 text-white transition-colors">Register</a>
                 @endguest
             </div>
 
         </div>
+
+        {{-- MOBILE DROPDOWN --}}
+        <div id="mobile-menu" class="hidden md:hidden flex-col gap-1 absolute top-12 left-0 right-0 bg-[#0d0f17] border-b border-white/[0.07] px-3 py-3 max-h-[calc(100vh-48px)] overflow-y-auto">
+            <form action="/" method="GET" class="sm:hidden mb-1">
+                <div class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search..."
+                        class="w-full bg-slate-800/60 border border-slate-700 rounded-lg pl-8 pr-3 py-2 text-[13px] text-slate-300 placeholder-slate-600 focus:outline-none focus:border-blue-500/60">
+                </div>
+            </form>
+
+            @foreach([
+                ['label' => 'Feed',      'href' => '/',               'active' => request()->is('/') && !request()->has('type')],
+                ['label' => 'Projects',  'href' => '/?type=project',  'active' => request()->get('type') === 'project'],
+                ['label' => 'Jobs',      'href' => '/?type=job',      'active' => request()->get('type') === 'job'],
+                ['label' => 'Questions', 'href' => '/?type=question', 'active' => request()->get('type') === 'question'],
+            ] as $tab)
+                <a href="{{ $tab['href'] }}"
+                   class="text-[13px] px-3 py-2.5 rounded-md transition-colors {{ $tab['active'] ? 'text-blue-400 bg-blue-400/10' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5' }}">
+                    {{ $tab['label'] }}
+                </a>
+            @endforeach
+
+            @unless(request()->is('posts/create'))
+                <div class="h-px bg-white/10 my-1"></div>
+                @foreach([['label' => 'Latest', 'sort' => 'latest'], ['label' => 'Top', 'sort' => 'top']] as $s)
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => $s['sort']]) }}"
+                       class="text-[13px] px-3 py-2.5 rounded-md transition-colors {{ request()->get('sort', 'latest') === $s['sort'] ? 'text-slate-100 bg-white/5' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5' }}">
+                        Sort: {{ $s['label'] }}
+                    </a>
+                @endforeach
+            @endunless
+
+            @auth
+                <div class="h-px bg-white/10 my-1"></div>
+                <a href="/users/{{ auth()->id() }}" class="text-[13px] px-3 py-2.5 rounded-md text-slate-400 hover:text-slate-200 hover:bg-white/5">{{ auth()->user()->name }}</a>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button class="w-full text-left text-[13px] px-3 py-2.5 rounded-md text-slate-500 hover:text-slate-200 hover:bg-white/5 cursor-pointer">Logout</button>
+                </form>
+            @endauth
+            @guest
+                <div class="h-px bg-white/10 my-1"></div>
+                <a href="/register" class="text-[13px] px-3 py-2.5 rounded-md text-slate-400 hover:text-slate-200 hover:bg-white/5">Register</a>
+            @endguest
+        </div>
     </nav>
 
     {{-- BODY --}}
-    <div class="flex h-[calc(100vh-48px)] max-w-275 mx-auto">
+    <div class="flex md:h-[calc(100vh-48px)] max-w-275 mx-auto">
 
         @if(request()->is('/'))
-        {{-- LEFT SIDEBAR --}}
-        <aside class="w-50 shrink-0 border-r border-white/[0.07] py-4 px-3 flex flex-col gap-1 overflow-hidden">
+        {{-- LEFT SIDEBAR (desktop only — mobile uses the nav dropdown above) --}}
+        <aside class="hidden md:flex w-50 shrink-0 border-r border-white/[0.07] py-4 px-3 flex-col gap-1 overflow-hidden">
 
             @php
                 $navItems = [
@@ -141,5 +200,30 @@
         
     </div>
 
+    <script>
+        (function () {
+            var btn = document.getElementById('mobile-menu-btn');
+            var menu = document.getElementById('mobile-menu');
+            var iconOpen = document.getElementById('mobile-menu-icon-open');
+            var iconClose = document.getElementById('mobile-menu-icon-close');
+            if (!btn || !menu) return;
+
+            btn.addEventListener('click', function () {
+                var isOpen = menu.classList.toggle('flex');
+                menu.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth >= 768 && !menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('flex');
+                    iconOpen.classList.remove('hidden');
+                    iconClose.classList.add('hidden');
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
