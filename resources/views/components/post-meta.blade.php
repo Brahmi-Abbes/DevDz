@@ -18,11 +18,12 @@
            class="text-[13px] font-semibold text-slate-200 hover:text-white transition-colors truncate">
             {{ $post->user->name }}
         </a>
-        @if($post->city ?? $post->user->city)
-            <span class="text-slate-600">·</span>
-            <span class="text-[12px] text-slate-500">{{ $post->city ?? $post->user->city }}</span>
-        @endif
-        <span class="text-slate-600">·</span>
+@if($post->city ?? $post->user->city)
+    <span class="text-slate-600">-</span>
+    <span class="text-[12px] text-slate-500">{{ $post->city ?? $post->user->city }}</span>
+@endif
+
+<span class="text-slate-600">-</span>
         <span class="text-[11px] text-slate-500 shrink-0">{{ $post->created_at->diffForHumans() }}</span>
     </div>
     <span class="text-[11px] font-semibold {{ $badge }} uppercase tracking-widest shrink-0 ml-3">
