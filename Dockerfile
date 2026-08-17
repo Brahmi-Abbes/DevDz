@@ -52,6 +52,6 @@ RUN chown -R www-data:www-data \
 
 COPY docker/nginx.conf /etc/nginx/sites-available/default
 
-EXPOSE 10000
+EXPOSE 80
 
 CMD ["sh", "-c", "php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan migrate --force && php-fpm -D && nginx -g 'daemon off;'"]
