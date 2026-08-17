@@ -40,7 +40,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --prefer-source
+RUN composer install --no-dev --optimize-autoloader
 
 # Copy Vite's compiled assets
 COPY --from=frontend /var/www/public/build ./public/build
