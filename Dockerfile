@@ -52,6 +52,8 @@ RUN chown -R www-data:www-data \
 
 COPY docker/nginx.conf /etc/nginx/sites-available/default
 
+COPY docker/ca.pem /etc/ssl/certs/aiven-ca.pem
+
 EXPOSE 80
 
 CMD ["sh", "-c", "php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan migrate --force && php-fpm -D && nginx -g 'daemon off;'"]
